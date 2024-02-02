@@ -12,6 +12,7 @@ public class Main {
 	static int[] dy = {0,1,0,-1};
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
+		StringBuilder sb = new StringBuilder();
 		
 		R = sc.nextInt();
 		C = sc.nextInt();
@@ -41,10 +42,12 @@ public class Main {
 		
 		for(int i=0; i<R; i++) {
 			for(int j=0; j<C; j++) {
-				System.out.print(ans[i][j]);
+				sb.append(ans[i][j]);
 			}
-			System.out.println();
+			sb.append("\n");
 		}
+		
+		System.out.println(sb);
 	}
 	
 	private static void boom() {
@@ -61,7 +64,6 @@ public class Main {
 			}else if(i % 2 != 0){
 				for(int j=0; j<R; j++) {
 					for(int k=0; k<C; k++) {
-//						cnt[j][k]++;
 						if(cnt[j][k] >=2) {
 							queue.add(new int[] {j,k});
 						}
