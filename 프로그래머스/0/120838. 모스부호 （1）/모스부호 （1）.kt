@@ -10,7 +10,7 @@ class Solution {
             "--.." to "z"
         )
         
-        val array = letter.split(" ")
+        val array: List<String> = letter.split(" ")
         println(array)
         
         for(element in array){
