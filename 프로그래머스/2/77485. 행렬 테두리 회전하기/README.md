@@ -1,10 +1,10 @@
 # [level 2] 행렬 테두리 회전하기 - 77485 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/77485) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/77485?language=kotlin) 
 
 ### 성능 요약
 
-메모리: 85.8 MB, 시간: 9.26 ms
+메모리: 101 MB, 시간: 63.60 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 02월 26일 00:11:04
+2024년 02월 26일 00:57:20
 
 ### 문제 설명
 
