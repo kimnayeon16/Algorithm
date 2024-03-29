@@ -13,6 +13,8 @@ class Solution {
             for(i in 0 until arrSorted.size-1){
                 if((num * max) % arrSorted[i] == 0){
                     cnt++
+                }else{
+                    break
                 }
             }
             // println(cnt)
