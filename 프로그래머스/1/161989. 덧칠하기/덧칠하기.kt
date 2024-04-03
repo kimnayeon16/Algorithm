@@ -8,12 +8,16 @@ class Solution {
         answer++
         
         while(idx != section.size){
-            if(sortedSec[idx] - start < m){
-                // continue
-            }else{
+            if(sortedSec[idx] - start >= m){
                 start = sortedSec[idx]
                 answer++
             }
+            // if(sortedSec[idx] - start < m){
+            //     // continue
+            // }else{
+            //     start = sortedSec[idx]
+            //     answer++
+            // }
             idx++
         }
         return answer
