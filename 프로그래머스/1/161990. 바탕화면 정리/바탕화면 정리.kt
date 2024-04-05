@@ -1,50 +1,22 @@
+import kotlin.math.*
+
 class Solution {
     fun solution(wallpaper: Array<String>): IntArray {
-        var answer: IntArray = intArrayOf()
-        
-        var wallpaper2 = Array(wallpaper[0].length, {""})
-        
-        
-        for(i in 0 until wallpaper[0].length){
-            for(j in 0 until wallpaper.size){
-                wallpaper2[i] += wallpaper[j][i].toString()
+        var minX = wallpaper.size
+        var minY = wallpaper[0].length
+        var maxX = 0
+        var maxY = 0
+
+        for (i in wallpaper.indices) {
+            for (j in wallpaper[i].indices) {
+                if (wallpaper[i][j] == '#') {
+                    minX = min(i, minX)
+                    minY = min(j, minY)
+                    maxX = max(i, maxX)
+                    maxY = max(j, maxY)
+                }
             }
         }
-        
-        
-        //위
-        for(i in 0 until wallpaper.size){
-            if(wallpaper[i].contains("#")){
-                answer += i
-                break
-            }
-        }
-        
-        //왼쪽
-        for(i in 0 until wallpaper2.size){
-            if(wallpaper2[i].contains("#")){
-                answer += i
-                break
-            }
-        }
-        
-        //아래
-        for(i in wallpaper.size-1 downTo 0){
-            if(wallpaper[i].contains("#")){
-                answer += i+1
-                break
-            }
-        }
-        
-        //오른쪽
-        for(i in wallpaper2.size-1 downTo 0){
-            if(wallpaper2[i].contains("#")){
-                answer += i+1
-                break
-            }
-        }
-        
-        
-        return answer
+        return intArrayOf(minX, minY, maxX + 1, maxY + 1)
     }
 }
