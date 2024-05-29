@@ -2,7 +2,6 @@ import java.util.*;
 
 class Solution {
     public int solution(int[] array, int height) {
-        int cnt = array.length;
         Arrays.sort(array);
         
         int start = 0;
@@ -17,7 +16,6 @@ class Solution {
                 start = mid + 1;
             }
         }
-        
         return array.length - start;
     }
 }
