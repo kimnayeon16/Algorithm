@@ -6,15 +6,12 @@ class Solution {
         for(int i=0; i<baby.length; i++){
             for(int j=0; j<babbling.length; j++){
                 if(babbling[j].contains(baby[i])){
-                    // System.out.println(babbling[j]);
                     babbling[j] = babbling[j].replace(baby[i], i+"");
-                    // System.out.println(babbling[j]);
                 }
             }
         }
         
         for(int i=0; i<babbling.length; i++){
-            
             if(isNum(babbling[i])){
                 char c = babbling[i].charAt(0);
                 boolean check = true;
