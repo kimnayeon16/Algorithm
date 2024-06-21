@@ -13,8 +13,6 @@ class Solution {
             babbling[i] = babbling[i].replace("ma"," ")
             babbling[i] = babbling[i].replace(" ","")
             
-            println(babbling[i])
-            
             if(babbling[i].length == 0){
                 answer++
             }
