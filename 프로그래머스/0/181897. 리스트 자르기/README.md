@@ -1,10 +1,10 @@
 # [level 0] 리스트 자르기 - 181897 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181897?language=java) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181897?language=kotlin) 
 
 ### 성능 요약
 
-메모리: 72.9 MB, 시간: 0.03 ms
+메모리: 63.7 MB, 시간: 27.04 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 08월 21일 12:48:23
+2024년 08월 21일 12:55:29
 
 ### 문제 설명
 
