@@ -2,33 +2,41 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
+	
 	static int N;
 	static int K;
+	static int S;
 	static int[][] map;
 	static boolean[][] visited;
-	static ArrayList<Node>[] virus;
-	static ArrayList<Node>[] virusTemp;
+	static List<Virus> list;
 	
-	static int[] dx = {0, 1, 0, -1};
-	static int[] dy = {1, 0, -1, 0};
+	static int[] dx = {1, 0, -1, 0};
+	static int[] dy = {0, 1, 0, -1};
 	
-	public static class Node{
-		private int virusNum;
+	public static class Virus implements Comparable<Virus>{
+		private int virusType;
 		private int x;
 		private int y;
+		private int cnt;
 		
-		public Node(int virusNum, int x, int y) {
-			this.virusNum = virusNum;
+		public Virus(int virusType, int x, int y, int cnt) {
+			this.virusType = virusType;
 			this.x = x;
-			this.y = y;
+			this.y = y;	
+			this.cnt = cnt;
+		}
+
+		
+		@Override
+		public int compareTo(Virus o) {
+			return this.virusType - o.virusType;
 		}
 	}
 	
@@ -39,93 +47,54 @@ public class Main {
 		N = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
 		
+		list = new ArrayList<Virus>();
+		
 		map = new int[N][N];
 		visited = new boolean[N][N];
-		virus = new ArrayList[K+1];
-		virusTemp = new ArrayList[K+1];
 		
-		for(int v=1; v<=K; v++) {
-			virus[v] = new ArrayList<>();
-			virusTemp[v] = new ArrayList<>();
-		}
-		
-		for(int n=0; n<N; n++) {
+		for(int i=0; i<N; i++) {
 			st = new StringTokenizer(bf.readLine());
-			for(int k=0; k<N; k++) {
-				map[n][k] = Integer.parseInt(st.nextToken());
-				if(map[n][k] != 0) {
-//					System.out.println(map[n][k]);
-					virus[map[n][k]].add(new Node(map[n][k], n,k));
+			for(int j=0; j<N; j++) {
+				map[i][j] = Integer.parseInt(st.nextToken());
+				
+				if(map[i][j] != 0) {
+					list.add(new Virus(map[i][j], i, j, 0));
 				}
 			}
 		}
 		
+		Collections.sort(list);
+		
 		st = new StringTokenizer(bf.readLine());
-		int S = Integer.parseInt(st.nextToken());
+		S = Integer.parseInt(st.nextToken());
 		int X = Integer.parseInt(st.nextToken());
 		int Y = Integer.parseInt(st.nextToken());
 		
-		
-//		System.out.println(virus[2].get(0).x + " " + virus[2].get(0).y);
-		
-		for(int s=0; s<S; s++) { // s초만큼 반복
-//			System.out.println("1번 :virus 사이즈: " + virus[1].size());
-//			System.out.println("2번 :virus 사이즈: " + virus[2].size());
-//			System.out.println("3번 :virus 사이즈: " + virus[3].size());
-			
-			bfs();
-			
-//			System.out.println((s+1) + "초 후");
-//			for(int i=0; i<N; i++) {
-//				for(int j=0; j<K; j++) {
-//					System.out.print(map[i][j] + " ");
-//				}
-//				System.out.println();
-//			}
-		}
+		bfs();
 		
 		System.out.println(map[X-1][Y-1]);
-		
-		
-		
 	}
+	
 	public static void bfs() {
-		Queue<Node> queue = new LinkedList<Node>();
+		Queue<Virus> queue = new LinkedList<>(list);
 		
-		for(int i=1; i<=K; i++) {
-			for(int j=0; j<virus[i].size(); j++) {
-				int x = virus[i].get(j).x;
-				int y = virus[i].get(j).y;
-				queue.add(new Node(i, x, y));
-				visited[x][y] =true;
-			}
-		}
-//		System.out.println("큐 사이즈" + queue.size());
 		
 		while(!queue.isEmpty()) {
-			Node tmp = queue.poll();
+			Virus tmp = queue.poll();
+			
+			if(tmp.cnt == S) break;
 			
 			for(int d=0; d<4; d++) {
 				int nx = dx[d] + tmp.x;
 				int ny = dy[d] + tmp.y;
-			
-				if(0<=nx && nx<N && 0<=ny && ny<N && !visited[nx][ny]) {
-					if(map[nx][ny] == 0) {
-						map[nx][ny] = tmp.virusNum;
-						virusTemp[tmp.virusNum].add(new Node(tmp.virusNum, nx, ny));
-					}
+				
+				if(nx<0 || nx>=N || ny<0 || ny>=N) continue;
+				
+				if(map[nx][ny] == 0) {
+					map[nx][ny] = tmp.virusType;
+					queue.add(new Virus(map[nx][ny], nx, ny, tmp.cnt+1));
 				}
 			}
 		}
-		
-		for(int i=1; i<=K; i++) {
-			virus[i].clear();
-			virus[i].addAll(virusTemp[i]);
-			virusTemp[i].clear();
-		}
-//		System.out.println("1번 :virus 사이즈: " + virus[1].size());
-//		System.out.println("2번 :virus 사이즈: " + virus[2].size());
-//		System.out.println("3번 :virus 사이즈: " + virus[3].size());
-//		
 	}
 }
