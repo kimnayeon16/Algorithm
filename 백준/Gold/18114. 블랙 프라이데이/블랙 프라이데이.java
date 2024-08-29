@@ -14,7 +14,7 @@ public class Main {
 		int N = Integer.parseInt(st.nextToken());
 		int C = Integer.parseInt(st.nextToken());
 		
-		ArrayList<Integer> things = new ArrayList<Integer>();
+		int[] things = new int[N];
 		
 		Boolean isFriday = false;
 		
@@ -22,15 +22,15 @@ public class Main {
 		for(int i=0; i<N; i++) {
 			int input = Integer.parseInt(st.nextToken());
 			if(input == C) {
-				things.add(0);
+				things[i] = 0;
 			}else {
-				things.add(input);
+				things[i] = input;
 			}
 		}
 		
-		Collections.sort(things);
+		Arrays.sort(things);
 		
-		if(things.get(0) == 0) {
+		if(things[0] == 0) {
 			System.out.println(1);
 			return;
 		}
@@ -39,7 +39,7 @@ public class Main {
 		int end = N-1;
 		
 		while(start < end) {
-			int sum = things.get(start) + things.get(end);
+			int sum = things[start] + things[end];
 			
 			if(sum == C) {
 				isFriday = true;
@@ -48,9 +48,19 @@ public class Main {
 			}else if(sum > C) {
 				end--;
 			}else {
-				if(things.indexOf(C - sum) > start && things.indexOf(C - sum) < end) {
-					isFriday = true;
-					break;
+				int s = start+1; int e = end-1; int c = C - sum;
+				
+				while(s <= e) {
+					int mid = (s+e)/2;
+					
+					if(things[mid] == c) {
+						System.out.println(1);
+						return;
+					}else if(things[mid] > c) {
+						e = mid-1;
+					}else {
+						s = mid+1;
+					}
 				}
 				start++;
 			}
