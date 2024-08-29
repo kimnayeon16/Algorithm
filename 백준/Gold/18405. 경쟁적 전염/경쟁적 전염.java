@@ -4,38 +4,36 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
-	
 	static int N;
-	static int K;
-	static int S;
+	
 	static int[][] map;
-	static boolean[][] visited;
-	static List<Virus> list;
+	
+	static int S;
+	static int X;
+	static int Y;
 	
 	static int[] dx = {1, 0, -1, 0};
-	static int[] dy = {0, 1, 0, -1};
-	
-	public static class Virus implements Comparable<Virus>{
+	static int[] dy = {0, 1, 0 ,-1};
+
+	public static class Node implements Comparable<Node>{
 		private int virusType;
 		private int x;
 		private int y;
-		private int cnt;
+		private int time;
 		
-		public Virus(int virusType, int x, int y, int cnt) {
+		public Node(int virusType, int x, int y, int time) {
 			this.virusType = virusType;
 			this.x = x;
-			this.y = y;	
-			this.cnt = cnt;
+			this.y = y;
+			this.time = time;
 		}
-
 		
 		@Override
-		public int compareTo(Virus o) {
+		public int compareTo(Node o) {
 			return this.virusType - o.virusType;
 		}
 	}
@@ -45,12 +43,11 @@ public class Main {
 		StringTokenizer st = new StringTokenizer(bf.readLine());
 		
 		N = Integer.parseInt(st.nextToken());
-		K = Integer.parseInt(st.nextToken());
-		
-		list = new ArrayList<Virus>();
+		int K = Integer.parseInt(st.nextToken());
 		
 		map = new int[N][N];
-		visited = new boolean[N][N];
+		
+		ArrayList<Node> al = new ArrayList<Node>();
 		
 		for(int i=0; i<N; i++) {
 			st = new StringTokenizer(bf.readLine());
@@ -58,43 +55,46 @@ public class Main {
 				map[i][j] = Integer.parseInt(st.nextToken());
 				
 				if(map[i][j] != 0) {
-					list.add(new Virus(map[i][j], i, j, 0));
+					al.add(new Node(map[i][j], i, j, 0));
 				}
 			}
 		}
 		
-		Collections.sort(list);
+		Collections.sort(al);
 		
 		st = new StringTokenizer(bf.readLine());
 		S = Integer.parseInt(st.nextToken());
-		int X = Integer.parseInt(st.nextToken());
-		int Y = Integer.parseInt(st.nextToken());
+		X = Integer.parseInt(st.nextToken());
+		Y = Integer.parseInt(st.nextToken());
 		
-		bfs();
+		bfs(al);
 		
 		System.out.println(map[X-1][Y-1]);
 	}
 	
-	public static void bfs() {
-		Queue<Virus> queue = new LinkedList<>(list);
+	public static void bfs(ArrayList<Node> al) {
+		Queue<Node> queue = new LinkedList<Node>(al);
 		
 		
 		while(!queue.isEmpty()) {
-			Virus tmp = queue.poll();
+			Node tmp = queue.poll();
 			
-			if(tmp.cnt == S) break;
+			if(tmp.time == S) {
+				break;
+			}
 			
 			for(int d=0; d<4; d++) {
 				int nx = dx[d] + tmp.x;
 				int ny = dy[d] + tmp.y;
 				
-				if(nx<0 || nx>=N || ny<0 || ny>=N) continue;
+				if(0>nx || nx>=N || 0>ny || ny>=N) continue;
 				
 				if(map[nx][ny] == 0) {
+					queue.add(new Node(tmp.virusType, nx, ny, tmp.time+1));
 					map[nx][ny] = tmp.virusType;
-					queue.add(new Virus(map[nx][ny], nx, ny, tmp.cnt+1));
 				}
 			}
 		}
+		
 	}
 }
