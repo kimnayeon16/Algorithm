@@ -25,7 +25,6 @@ public class Main {
 		for(int i=0; i<n; i++) {
 			arr[i] = A.charAt(i) - '0';
 		}
-//		System.out.println(Arrays.toString(arr));
 		
 		findNum(0, 0);
 		if(max == Integer.MIN_VALUE) {
@@ -37,14 +36,17 @@ public class Main {
 	
 	private static void findNum(int num, int depth) {
 		if(depth == n) {
-//			System.out.println(num);
 			if(num < B && n == Integer.toString(num).length()) {
 				max = Math.max(max, num);
 			}
+			return;
 		}
 		
 		for(int i=0; i<n; i++) {
 			if(!visited[i]) {
+				//첫 자리에는 0이 올 수 없음.
+				if(depth == 0 && arr[i] == 0) continue;	
+				
 				visited[i] = true;
 				findNum(10*num + arr[i], depth+1);
 				visited[i] = false;
