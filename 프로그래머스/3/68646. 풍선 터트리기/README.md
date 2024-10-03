@@ -1,10 +1,10 @@
 # [level 3] 풍선 터트리기 - 68646 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/68646) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/68646?language=kotlin) 
 
 ### 성능 요약
 
-메모리: 149 MB, 시간: 44.83 ms
+메모리: 115 MB, 시간: 36.57 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 10월 01일 22:04:38
+2024년 10월 03일 10:57:19
 
 ### 문제 설명
 
