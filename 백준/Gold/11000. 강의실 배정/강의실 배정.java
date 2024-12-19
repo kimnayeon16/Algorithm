@@ -1,22 +1,24 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.PriorityQueue;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		LinkedList<Integer> ll = new LinkedList<>();
+	public static void main(String[] args) throws IOException {
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(bf.readLine());
 		PriorityQueue<Integer> pq = new PriorityQueue<>();
+		int cnt = 1;
 		
-		
-		int N = sc.nextInt();
+		int N = Integer.parseInt(st.nextToken());
 		int[][] arr = new int[N][2];
 		for(int i=0; i<N; i++) {
-			arr[i][0] = sc.nextInt();
-			arr[i][1] = sc.nextInt();
+			st = new StringTokenizer(bf.readLine());
+			arr[i][0] = Integer.parseInt(st.nextToken());
+			arr[i][1] = Integer.parseInt(st.nextToken());
 		}
 		
 		Arrays.sort(arr, new Comparator<int[]>() {
@@ -39,7 +41,7 @@ public class Main {
 						pq.add(arr[i][1]);
 						pq.add(num);
 						break;
-					}else{
+					}else {
 						pq.add(arr[i][1]);
 						break;
 					}
