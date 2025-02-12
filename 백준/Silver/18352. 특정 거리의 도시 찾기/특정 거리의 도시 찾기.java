@@ -1,61 +1,71 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
-	static int N; static int M;
-	static int K; static int X;
-	static int[] d;
-	static ArrayList<ArrayList<Integer>> al;
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+	static List<Integer>[] list;
+	static int[] cnt;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(bf.readLine());
+		StringBuilder sb = new StringBuilder();
 		
-		N = sc.nextInt();
-		M = sc.nextInt();
-		K = sc.nextInt();
-		X = sc.nextInt();
-		al = new ArrayList<ArrayList<Integer>>();
-		d = new int[N+1];
+		int N = Integer.parseInt(st.nextToken());
+		int M = Integer.parseInt(st.nextToken());
+		int K = Integer.parseInt(st.nextToken());
+		int X = Integer.parseInt(st.nextToken());
+		
+		list = new ArrayList[N+1];
 		
 		for(int i=0; i<=N; i++) {
-			al.add(new ArrayList<Integer>());
-			d[i] = -1;
+			list[i] = new ArrayList<Integer>();
 		}
 		
-		for(int i=0; i<M; i++) {
-			int a = sc.nextInt();
-			int b = sc.nextInt();
-			al.get(a).add(b);
+		cnt = new int[N+1];
+		Arrays.fill(cnt, Integer.MAX_VALUE);
+		
+		for(int j=0; j<M; j++) {
+			st = new StringTokenizer(bf.readLine());
+			int A = Integer.parseInt(st.nextToken());
+			int B = Integer.parseInt(st.nextToken());
+			
+			list[A].add(B);
 		}
-		BFS(X);
-		boolean check = false;
+		
+		solve(X);
+		
 		for(int i=1; i<=N; i++) {
-			if(d[i] == K) {
-				System.out.println(i);
-				check = true;
+			if(cnt[i] == K) {
+				sb.append(i).append("\n");
 			}
 		}
+		if(sb.length() == 0) {
+			System.out.println(-1);
+		}else {
+			System.out.println(sb);
+		}
 		
-		if(!check) System.out.println(-1);
 		
 	}
-	private static void BFS(int x) {
-		d[x] = 0;
-		
+	public static void solve(int start) {
 		Queue<Integer> queue = new LinkedList<Integer>();
-		queue.add(x);
+		queue.add(start);
+		cnt[start] = 0;
 		
 		while(!queue.isEmpty()) {
-			int now = queue.poll();
-			
-			for(int i=0; i<al.get(now).size(); i++) {
-				int nextNode = al.get(now).get(i);
-				
-				if(d[nextNode] == -1) {
-					d[nextNode] = d[now] + 1;
-					queue.add(nextNode);
+			int tmp = queue.poll();
+
+			for(int next: list[tmp]) {
+				if(cnt[tmp] + 1 < cnt[next]) {
+					cnt[next] = cnt[tmp] + 1;
+					queue.offer(next);
 				}
 			}
 		}
