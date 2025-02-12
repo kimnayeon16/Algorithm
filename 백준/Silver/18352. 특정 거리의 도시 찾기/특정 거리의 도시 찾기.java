@@ -39,7 +39,7 @@ public class Main {
 			list[A].add(B);
 		}
 		
-		solve(X);
+		solve(X, K);
 		
 		for(int i=1; i<=N; i++) {
 			if(cnt[i] == K) {
@@ -54,13 +54,15 @@ public class Main {
 		
 		
 	}
-	public static void solve(int start) {
+	public static void solve(int start, int K) {
 		Queue<Integer> queue = new LinkedList<Integer>();
 		queue.add(start);
 		cnt[start] = 0;
 		
 		while(!queue.isEmpty()) {
 			int tmp = queue.poll();
+			
+			if(cnt[tmp] == K) continue;
 
 			for(int next: list[tmp]) {
 				if(cnt[tmp] + 1 < cnt[next]) {
