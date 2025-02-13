@@ -38,9 +38,6 @@ public class Main {
 		st = new StringTokenizer(bf.readLine());
 		for(int i=0; i<N; i++) {
 			vision[i] = Integer.parseInt(st.nextToken());
-		}
-		
-		for(int i=0; i<=N; i++) {
 			graph.add(new ArrayList<>());
 		}
 		
@@ -63,7 +60,6 @@ public class Main {
 		dist[start] = 0;
 		
 		boolean[] visited = new boolean[N];
-		visited[0] = true;
 		for(int i=0; i<N; i++) {
 			if(vision[i] == 1) {
 				visited[i] = true;
@@ -76,6 +72,8 @@ public class Main {
 		
 		while(!queue.isEmpty()) {
 			Node tmp = queue.poll();
+			
+			if(visited[tmp.idx]) continue;
 			
 			if(tmp.cost > dist[tmp.idx]) continue;
 			
