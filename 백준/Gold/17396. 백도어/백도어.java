@@ -74,6 +74,7 @@ public class Main {
 			Node tmp = queue.poll();
 			
 			if(visited[tmp.idx]) continue;
+			visited[tmp.idx] = true;
 			
 			if(tmp.cost > dist[tmp.idx]) continue;
 			
