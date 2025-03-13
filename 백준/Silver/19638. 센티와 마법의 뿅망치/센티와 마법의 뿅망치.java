@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Collections;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
@@ -10,7 +11,7 @@ public class Main {
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(bf.readLine());
 		StringBuilder sb = new StringBuilder();
-		PriorityQueue<Integer> queue = new PriorityQueue<Integer>((o1, o2) -> o2 - o1);
+		PriorityQueue<Integer> queue = new PriorityQueue<Integer>(Collections.reverseOrder());
 		
 		int N = Integer.parseInt(st.nextToken());
 		int H = Integer.parseInt(st.nextToken());
