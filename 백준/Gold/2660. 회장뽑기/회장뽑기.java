@@ -3,34 +3,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
-	public static class Node{
-		private int person;
-		private int depth;
-		
-		public Node(int person, int depth) {
-			this.person = person;
-			this.depth = depth;
-		}
-	}
-	
-	static int N;
-	static ArrayList<ArrayList<Integer>> al;
-	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
 		StringBuilder sb = new StringBuilder();
 		
-		N = Integer.parseInt(bf.readLine());
-		al = new ArrayList<ArrayList<Integer>>();
+		int N = Integer.parseInt(bf.readLine());
+		int[][] dist = new int[N+1][N+1];
 		
-		for(int i=0; i<=N; i++) {
-			al.add(new ArrayList<Integer>());
+		for(int i=1; i<=N; i++) {
+			Arrays.fill(dist[i], 100);
+			dist[i][i] = 0;
 		}
 		
 		while(true) {
@@ -39,53 +25,38 @@ public class Main {
 			int b = Integer.parseInt(st.nextToken());
 			
 			if(a == -1 && b == -1) break;
-			al.get(a).add(b);
-			al.get(b).add(a);
 			
+			dist[a][b] = 1;
+			dist[b][a] = 1;
 		}
 		
-		int[] max = new int[N+1];
-		int min = Integer.MAX_VALUE;
-		for(int i=1; i<=N; i++) {
-			max[i] = solve(i);
-			min = Math.min(min, max[i]);
-		}
-		
-		ArrayList<Integer> all = new ArrayList<Integer>();
-		for(int i=1; i<=N; i++) {
-			if(min == max[i]) {
-				all.add(i);
-			}
-		}
-		sb.append(min).append(" ").append(all.size()).append("\n");
-		for(int i=0; i<all.size(); i++) {
-			sb.append(all.get(i)).append(" ");
-		}
-		System.out.println(sb);
-//		System.out.println(Arrays.toString(max));
-	}
-
-	private static int solve(int i) {
-		Queue<Node> queue = new LinkedList<Node>();
-		boolean[] visited=  new boolean[N+1];
-		
-		queue.add(new Node(i,0));
-		visited[i] = true;
-		
-		int m = 0;
-		
-		while(!queue.isEmpty()) {
-			Node tmp = queue.poll();
-			
-			m = Math.max(m, tmp.depth);
-			
-			for(int next : al.get(tmp.person)) {
-				if(!visited[next]) {
-					queue.add(new Node(next, tmp.depth+1));
-					visited[next] = true;
+		for(int k=1; k<=N; k++) {
+			for(int i=1; i<=N; i++) {
+				for(int j=1; j<=N; j++) {
+					dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
 				}
 			}
 		}
-		return m;
+	
+		int[] score = new int[N+1];
+		int min = Integer.MAX_VALUE;
+		for(int i=1; i<=N; i++) {
+			for(int j=1; j<=N; j++) {
+				score[i] = Math.max(score[i], dist[i][j]);
+			}
+			min = Math.min(min, score[i]);
+		}
+		ArrayList<Integer> person = new ArrayList<Integer>();
+		for(int i=1; i<=N; i++) {
+			if(min == score[i]) {
+				person.add(i);
+			}
+		}
+		
+		sb.append(min).append(" ").append(person.size()).append("\n");
+		for(int p : person) {
+			sb.append(p).append(" ");
+		}
+		System.out.println(sb);
 	}
 }
