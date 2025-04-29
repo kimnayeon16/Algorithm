@@ -13,13 +13,14 @@ public class Main {
 		int M = Integer.parseInt(st.nextToken());
 		
 		int[] time = new int[N];
+		int max = 0;
 		for(int i=0; i<N; i++) {
 			time[i] = Integer.parseInt(bf.readLine());
+			if(time[i] > max) max = time[i];
 		}
-		Arrays.sort(time);
 		
 		long start = 0;
-		long end = (long) time[N-1] * M;
+		long end = (long) max * M;
 		
 		while(start <= end) {
 			long mid = (start + end) / 2;
